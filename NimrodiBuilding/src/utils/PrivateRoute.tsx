@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { RootState } from "../store/store";
@@ -13,10 +13,11 @@ const PrivateRoute = ({ component }: IPrivateRoute) => {
   const floorAccess = useSelector((state: RootState) => state.floorAccess.floorAccess);
   const navigate = useNavigate();
 
-  if (!floorAccess[floorIndex]) {
-    navigate("/forbidden");
-    return null;
-  }
+  useEffect(()=> {
+    if (!floorAccess[floorIndex]) {
+      navigate("/forbidden");
+    }
+  })
 
   return <>{component}</>;
 };
